@@ -1,25 +1,18 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import CreateTransaction from './pages/CreateTransaction';
+import TransactionList from './pages/TransactionList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [allTrans,setallTrans] = useState([]);
+  const [flag, setFlag] = useState(true);
+  return(
+    <>
+    {
+      (flag?<CreateTransaction allTrans={allTrans} setallTrans={setallTrans} flag={flag} setFlag={setFlag} />:<TransactionList allTrans={allTrans} flag={flag} setFlag={setFlag}/>)    
+    }
+    </>
+  )
 }
 
 export default App;
