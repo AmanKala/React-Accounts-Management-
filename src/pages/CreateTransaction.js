@@ -1,38 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import {useNavigate} from 'react-router-dom';
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
 import Heading from "../components/Heading";
 
 const CreateTransaction = (props) =>{
-    const [transaction,setTransaction] = useState({
-        title:'',
-        date:'',
-        amount:'',
-        type:''
-    })
-
     const navigate = useNavigate();
+
     const handleData = (event) =>{
         event.preventDefault();
-        const newEntry={id:new Date().getTime().toString(), title: transaction.title, date:transaction.date, amount:transaction.amount, type:transaction.type, status:transaction.status, quantity:transaction.quantity, unit_name:transaction.unit_name, utr:transaction.utr, project:transaction.project, comment:transaction.comment, paid_by_to:transaction.paid_by_to};
+        const newEntry={id:new Date().getTime().toString(), title: props.transaction.title, date:props.transaction.date, amount:props.transaction.amount, type:props.transaction.type, status:props.transaction.status, quantity:props.transaction.quantity, unit_name:props.transaction.unit_name, utr:props.transaction.utr, project:props.transaction.project, comment:props.transaction.comment, paid_by_to:props.transaction.paid_by_to};
+        let emptyList={title:'',date:'',paid_by_to:'',amount:'',quantity:'',unit_name:'',type:'',status:'',utr:'',project:'',comment:'',};
 
-        props.setallTrans([...props.allTrans,newEntry]);
-        setTransaction({
-            title:'',
-            date:'',
-            paid_by_to:'',
-            amount:'',
-            quantity:'',
-            unit_name:'',
-            type:'',
-            status:'',
-            utr:'',
-            project:'',
-            comment:'',
-        });
-        props.setFlag(!props.flag);
-        navigate('transactionlist');
+        if(props.buttonChange){
+            props.setallTrans(
+                props.allTrans.map((ele)=>{
+                    if(ele.id===props.transactionId)
+                    {
+                        return {...ele,title: props.transaction.title, date:props.transaction.date, amount:props.transaction.amount, type:props.transaction.type, status:props.transaction.status, quantity:props.transaction.quantity, unit_name:props.transaction.unit_name, utr:props.transaction.utr, project:props.transaction.project, comment:props.transaction.comment, paid_by_to:props.transaction.paid_by_to}
+                    }
+                    return ele;
+                })
+            );
+        }
+        else{
+            props.setallTrans([...props.allTrans,newEntry]);
+        }
+
+        props.setTransaction(emptyList);
+
+        navigate('/transactionlist');
     }
 
     let name,value;
@@ -40,26 +37,35 @@ const CreateTransaction = (props) =>{
         name = event.target.name;
         value= event.target.value;
 
-        setTransaction({...transaction, [name]:value});
+        props.setTransaction({...props.transaction, [name]:value});
+    }
+
+    const handleList = () =>{
+        navigate('/transactionlist');
     }
 
     return(
         <>
-            <Heading title='Create Transaction' />
+            {
+                props.buttonChange ? <Heading title='Edit Transaction' /> :<Heading title='Create Transaction' />
+            }
             <form onSubmit={handleData}>
-                <InputField title='Title' type='text' name='title' value={transaction.title} onChange={handleInput} />
-                <InputField title='Date' type='date' name='date' value={transaction.date} onChange={handleInput} />
-                <InputField title='Paid By/To' type='text' name='paid_by_to' value={transaction.paid_by_to} onChange={handleInput} />
-                <InputField title='Amount' type='number' name='amount' value={transaction.amount} onChange={handleInput} />
-                <InputField title='Quantity' type='number' name='quantity' value={transaction.quantity} onChange={handleInput} />
-                <InputField title='Unit name' type='text' name='unit_name' value={transaction.unit_name} onChange={handleInput} />
-                <SelectField title='Type' name='type' value={transaction.type} onChange={handleInput} dropdown={['expence','revenue']} />
-                <SelectField title='Status' name='status' value={transaction.status} onChange={handleInput} dropdown={['Due','Cancled','Cleared']} />
-                <InputField title='UTR' type='text' name='utr' value={transaction.utr} onChange={handleInput} />
-                <InputField title='Project' type='text' name='project' value={transaction.project} onChange={handleInput} />
-                <InputField title='Comment' type='text' name='comment' value={transaction.comment} onChange={handleInput} />
+                <InputField title='Title' type='text' name='title' value={props.transaction.title} onChange={handleInput} required={true} />
+                <InputField title='Date' type='date' name='date' value={props.transaction.date} onChange={handleInput} required={true} />
+                <InputField title='Paid By/To' type='text' name='paid_by_to' value={props.transaction.paid_by_to} onChange={handleInput} required={true} />
+                <InputField title='Amount' type='number' name='amount' value={props.transaction.amount} onChange={handleInput} required={true} />
+                <InputField title='Quantity' type='number' name='quantity' value={props.transaction.quantity} onChange={handleInput} required={true} />
+                <InputField title='Unit name' type='text' name='unit_name' value={props.transaction.unit_name} onChange={handleInput} required={true} />
+                <SelectField title='Type' name='type' value={props.transaction.type} onChange={handleInput} required={true} dropdown={['expence','revenue']} />
+                <SelectField title='Status' name='status' value={props.transaction.status} onChange={handleInput} required={true} dropdown={['Due','Cancled','Cleared']} />
+                <InputField title='UTR' type='text' name='utr' value={props.transaction.utr} onChange={handleInput} required={true} />
+                <InputField title='Project' type='text' name='project' value={props.transaction.project} onChange={handleInput} required={true} />
+                <InputField title='Comment' type='text' name='comment' value={props.transaction.comment} onChange={handleInput} required={true} />
 
-                <button type="submit">Create Transaction</button>
+                {
+                    props.buttonChange ? <button type="submit">Edit Transaction</button> : <button type="submit">Create Transaction</button>
+                }
+                <button onClick={handleList}>Transaction List</button>
             </form>
         </>
     )

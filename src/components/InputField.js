@@ -7,7 +7,9 @@ const InputField = (props) =>
             <div>
                 <label >{props.title}</label>
                 <br/>
-                <input type={props.type} name={props.name} value={props.value} onChange={props.onChange} required/>
+                {
+                    <input type={props.type} name={props.name} value={props.value} onChange={props.onChange} required />
+                }
                 <br/><br/>
             </div>
         </>
