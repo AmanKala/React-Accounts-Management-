@@ -3,7 +3,7 @@ import React from "react";
 const Heading = (props) =>{
     return(
         <>
-            <h3>{props.title}</h3>
+            <h1 className="text-xl text-center font-bold underline">{props.title}</h1>
         </>
     )
 } 

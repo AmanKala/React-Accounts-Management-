@@ -49,7 +49,7 @@ const CreateTransaction = (props) =>{
             {
                 props.buttonChange ? <Heading title='Edit Transaction' /> :<Heading title='Create Transaction' />
             }
-            <form onSubmit={handleData}>
+            <form onSubmit={handleData} className="mb-5 mt-5">
                 <InputField title='Title' type='text' name='title' value={props.transaction.title} onChange={handleInput} required={true} />
                 <InputField title='Date' type='date' name='date' value={props.transaction.date} onChange={handleInput} required={true} />
                 <InputField title='Paid By/To' type='text' name='paid_by_to' value={props.transaction.paid_by_to} onChange={handleInput} required={true} />
@@ -63,9 +63,9 @@ const CreateTransaction = (props) =>{
                 <InputField title='Comment' type='text' name='comment' value={props.transaction.comment} onChange={handleInput} required={true} />
 
                 {
-                    props.buttonChange ? <button type="submit">Edit Transaction</button> : <button type="submit">Create Transaction</button>
+                    props.buttonChange ? <button className="mr-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:shadow-outline" type="submit">Edit Transaction</button> : <button className="mr-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:shadow-outline" type="submit">Create Transaction</button>
                 }
-                <button onClick={handleList}>Transaction List</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:shadow-outline" onClick={handleList}>Transaction List</button>
             </form>
         </>
     )

@@ -12,23 +12,24 @@ const TransactionList = (props) =>{
         let currentTransaction=props.allTrans.find((ele)=>{
             return ele.id===id;
         });
-        console.log(currentTransaction);
         props.setTransaction(currentTransaction);
         props.setTransactionId(id);
         navigate('/edit');
     }
 
     const deleteEntry=(id)=>{
-        const updatedList=props.allTrans.filter((ele)=>{
-            return ele.id!==id;
-        })
-        props.setallTrans(updatedList);
+        if(window.confirm('Delete this transaction?')){
+            const updatedList=props.allTrans.filter((ele)=>{
+                return ele.id!==id;
+            })
+            props.setallTrans(updatedList);
+        }
     }
     return(
         <>
             <Heading title='Transaction List' />
-            <table>
-                <thead>
+            <table className="table-auto min-w-full mt-5">
+                <thead className="border-b">
                     <tr>
                         <th>Title</th>
                         <th>Date</th>
@@ -45,7 +46,7 @@ const TransactionList = (props) =>{
                     {
                         props.allTrans.map((trans)=>{
                             return(
-                                <tr key={trans.id}>
+                                <tr key={trans.id} className="border-b text-center">
                                     <td>{trans.title}</td>
                                     <td>{trans.date}</td>
                                     <td>{trans.paid_by_to}</td>
@@ -55,8 +56,8 @@ const TransactionList = (props) =>{
                                     <td>{trans.utr}</td>
                                     <td>{trans.project}</td>
                                     <td>
-                                        <button onClick={()=>handleEdit(trans.id)}>Edit</button>
-                                        <button onClick={()=>deleteEntry(trans.id)}>Delete</button>
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold mr-1  px-4 rounded focus:shadow-outline" onClick={()=>handleEdit(trans.id)}>Edit</button>
+                                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold  px-4 rounded focus:shadow-outline" onClick={()=>deleteEntry(trans.id)}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -65,7 +66,7 @@ const TransactionList = (props) =>{
                 </tbody>
             </table>
             <br/>
-            <button onClick={handleClick}>Create Transaction</button>
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Create Transaction</button>
         </>
     )
 }
