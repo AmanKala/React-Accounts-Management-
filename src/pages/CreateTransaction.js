@@ -49,7 +49,7 @@ const CreateTransaction = (props) =>{
             {
                 props.buttonChange ? <Heading title='Edit Transaction' /> :<Heading title='Create Transaction' />
             }
-            <form onSubmit={handleData} className="mb-5 mt-5">
+            <form onSubmit={handleData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10">
                 <InputField title='Title' type='text' name='title' value={props.transaction.title} onChange={handleInput} required={true} />
                 <InputField title='Date' type='date' name='date' value={props.transaction.date} onChange={handleInput} required={true} />
                 <InputField title='Paid By/To' type='text' name='paid_by_to' value={props.transaction.paid_by_to} onChange={handleInput} required={true} />

@@ -5,6 +5,21 @@ import Heading from "../components/Heading";
 const TransactionList = (props) =>{
     const navigate = useNavigate();
     const handleClick = () =>{
+        props.setTransaction(
+            {
+                title:'',
+                date:'',
+                paid_by_to:'',
+                amount:'',
+                quantity:'',
+                unit_name:'',
+                type:'',
+                status:'',
+                utr:'',
+                project:'',
+                comment:'',
+              }
+        )
         navigate('/');
     }
 
